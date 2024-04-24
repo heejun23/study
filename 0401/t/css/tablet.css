@@ -1,0 +1,9 @@
+@charset "utf-8";
+
+/* tablet 해상도일 경우 적용되는 서식 */
+
+@media screen and (min-width:768px) and (max-width:1024px) {
+  body{
+    background:#0f0;
+  }
+}

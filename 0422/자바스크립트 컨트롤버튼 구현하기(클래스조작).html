@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>자바스크립트 컨트롤버튼 구현하기(클래스조작)</title>
+    <style>
+      /* 초기화 */
+      ul,
+      li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      li {
+        width: 15px;
+        height: 15px;
+        background: #ccc;
+        display: inline-block;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      .act {
+        background-color: #f00 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>자바스크립트 컨트롤버튼 구현하기(클래스조작)</h2>
+    <p>
+      목록태그를 활용해 컨트롤버튼 서식을 작성하고, act클래스로 클릭시 적용할
+      서식을 작성하여 사용자가 버튼을 클릭하면 모든 act를 제거하고 해당 버튼에만
+      act클래스를 적용한다.
+    </p>
+
+    <ul class="c_btn_list">
+      <li class="c_btn act">&nbsp;</li>
+      <li class="c_btn">&nbsp;</li>
+      <li class="c_btn">&nbsp;</li>
+      <li class="c_btn">&nbsp;</li>
+    </ul>
+
+    <!-- 제이쿼리로 구현   -->
+
+    <!-- 제이쿼리 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- <script>
+      $(document).ready(function () {
+        //1. 변수선언
+        let cbtn = $(".c_btn");
+
+        //2. 사용자가 컨트롤버튼을 클릭시 해당 li에 act클래스 적용하기
+        cbtn.click(function () {
+          $(".c_btn").removeClass("act"); //기존서식 모두 제거하고
+          $(this).addClass("act"); //해당 li에 서식을 적용한다
+        });
+      });
+    </script> -->
+
+    <!-- 자바스크립트로 구현 -->
+    <script>
+      // 변수선언
+      let c_btn = document.querySelectorAll(".c_btn");
+
+      //2. 반복문을 사용해 c_btn에 각각 이벤트를 설정해 서식적용
+      for (let i = 0; i < c_btn.length; i++) {
+        console.log(c_btn[i]); //태그목록 확인하기
+        c_btn[i].addEventListener("click", class_act );
+      }
+      // act서식이 변경되는 함수
+      function class_act(){
+        for (let j = 0; j < c_btn.length; j++) {
+            //반복문 돌려서 컨트롤 개수만큼
+            c_btn[j].classList.remove("act"); // act서식 찾아서 제거하기
+            this.classList.add("act"); //클릭한 c_btn에만 서식 적용하기
+          }
+      }
+    </script>
+  </body>
+</html>

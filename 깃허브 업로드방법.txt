@@ -1,0 +1,26 @@
+GUI방식
+
+
+CLI방식
+clear : 화면을 깨끗하게 비움
+
+*전역구성설정
+git config --global core.autocrlf true
+버전관리 협업 window, mac 자동줄바꿈 차이를 없애기 위해 설정
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+git config --global user.name 'jun'
+git config --global user.email 'rabbity9241@gmail.com'
+
+git config --global --list 
+맞게 설정되었는지 확인
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+버전관리 시작
+1. git init : 'git' 정보 초기화
+2. git status : 현재 git상태 확인
+3. git add . : 모든파일, 폴더를 추적관리(상태)함
+4. git commit -m 'javascript class' : 메세지 기록
+5. git log : 버전기록 날짜, 시간을 확인
+6. git remote add origin https://github.com/heejun23/javascript_jquery_class.git : 원격으로 계정 접속
+7. git remote -v : 연결 잘 되었는지 확인
+8. git branch -m master main : master브런치명을 main으로 변경하기
+9. git push origin +main : git저장소에 파일 모두 업로드하기

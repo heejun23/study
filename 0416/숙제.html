@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>숙제</title>
+  <style>
+    *{margin: 0; padding: 0;}
+    .swiper-container{
+      width: 100%;
+      position: relative;
+    }
+    .swiper-wrapper{
+      width: 500%; height: 700px;
+      display: flex;
+      position: relative;
+      transition: 0.5s;
+    }
+    
+    .swiper-slide{
+      width: 100%; height: 100%;
+      text-align: center;
+    }
+    .swiper-slide:first-child{background-color: #ffdcdc;}
+    .swiper-slide:nth-child(2){background-color: #fff2a7;}
+    .swiper-slide:nth-child(3){background-color: #b2d4a9;}
+    .swiper-slide:nth-child(4){background-color: #98c9cf;}
+    .swiper-slide:last-child{background-color: #ccc1e7;}
+
+    .btn{
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      background-color: rgba(56, 56, 56, 0.5);
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      position: absolute;
+      top: 46%;
+    }
+    .btn:hover{background-color: #636363;}
+    #right{right: 0; margin-right: 10px;}
+    #left{margin-left: 10px;}
+  </style>
+</head>
+<body>
+  <article class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">1</div>
+      <div class="swiper-slide">2</div>
+      <div class="swiper-slide">3</div>
+      <div class="swiper-slide">4</div>
+      <div class="swiper-slide">5</div>
+    </div>
+    <button class="btn" id="left">이전</button>
+    <button class="btn" id="right">다음</button>
+  </article>
+  <script>
+    //변수선언
+    //좌,우 버튼, 슬라이드 5장 목록, 움직이는 이동거리
+    const l_btn = document.getElementById('left')
+    const r_btn = document.getElementById('right')
+    const slide = document.querySelector('.swiper-wrapper')
+    const slide_con = document.querySelectorAll('.swiper-wrapper .swiper-slide')
+
+    const con_n = slide_con.length //목록의 개수
+
+    console.log(con_n)
+
+    const con_w = 100; //이미지너비값 100%
+    const s_con = 1;  //한페이지에 보여질 페이지수
+
+    let count = 0; //  초기값
+
+    // //감싸는 뷰포트(wrapper) 너비값 구하기
+    // slide.style.width = con_w * 5 + '%' 
+    // console.log(slide.style.width)
+
+    //왼쪽으로 움직이는 함수
+    function mslide(n) {
+      slide.style.left = -(con_w * n) + '%' // 0, -100%, -200%, -300%...-500%
+      count = n;
+      console.log(slide.style.left)
+    }
+
+    //버튼 클릭시 n값을 mslide에 넘겨서 슬라이드 움직이게하기
+    l_btn.addEventListener('click',function(){
+      if(count > 0){
+        // 만약에 count의 값이 0보다 크면
+        mslide(count-1) //count값에 1을 빼고
+      }else{//그렇지 않으면
+        mslide(con_n - s_con)//con목록개수에 페이지보여질슬라이드 개수를 뺀값을 넣어라
+      }
+    })
+
+    //버튼 클릭시 n값을 mslide에 넘겨서 슬라이드 움직이게하기
+    r_btn.addEventListener('click',function(){
+      if(count < con_n - s_con){
+        // 만약에 count의 값이 이미지목록 개수와 보여질 개수 뺀값보다 작다면
+        mslide(count + 1) //count값에 1을 더하고
+      }else{//그렇지 않으면
+        mslide(0)//0을 대입해 첫번째콘텐츠가 나오게 한다
+      }
+    })    
+
+    // 3초마다 자동으로 함수를 호출해 움직이게 한다.
+    //시간객체 setInterval(함수명, 시간) 반복실행
+    //시간제거 clearInterval(객체명) 시간을 정지함
+
+    let Timer = setInterval(function(){
+    if(count < con_n-s_con){
+        mslide(count+1); 
+      }else{
+        mslide(0);
+      }
+    },4000);
+
+
+
+
+  </script>
+</body>
+</html>

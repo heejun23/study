@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>제이쿼리 문서객체조작 실습2. 모달윈도 - 오늘하루열지않음</title>
+
+    <style>
+      .modal{
+        background: rgba(0, 0, 0, 0.8);
+        width: 100%; height: 100%;
+        position: fixed;
+        top: 0; left: 0;
+      }
+      .m_inner{
+        width: 350px;
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%,-50%);
+      }
+      .m_inner img{width: 100%; border-radius: 20px;}
+
+      #ch{display: none;}
+      label{
+        color: #fff;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      input[type='button']{
+        border: none;
+        background: none;
+        color: #fff;
+        font-weight: bold;
+        font-size: 0.9rem;
+        float: right;
+        cursor: pointer;
+      }
+    </style>
+
+    <!-- 제이쿼리 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- 제이쿼리 쿠키파일 -->
+    <script src="./jquery.cookie.js"></script>
+    <script>
+      $(document).ready(function () {
+        //1.변수선안
+        let modal = `
+        <div class="modal">
+          <div class="m_inner">
+            <a href="#" title="이벤트페이지 바로가기">
+              <img src="./images/popup.jpg" alt="배너" />
+            </a>
+            <input type="checkbox" name="" id="ch" />
+            <label for="ch">오늘 하루 열지 않음</label>
+            <input type="button" value="닫기" id="c_btn"/>
+          </div>
+        </div>
+        `;
+
+        //body태그의 안쪽 맨뒤에 modal내용을 출력한다
+        $('body').append(modal)
+
+        let ch = $('#ch') //체크박스 변수
+
+        //현재 샤용자가 브라우저에서 쿠키정보가 있다면 모달창이 안나오게 해야함.
+        if($.cookie('popup')=='none'){
+          $('.modal').hide();
+        }
+
+        //체크박스를 체크하고 닫기버튼을 누르면 모달창이 닫힘
+        function close_popup(){
+          if(ch.is(':checked')){  //체크가 된 경우라면
+            //쿠키정보가 저장되어야 함.
+            $.cookie('popup','none',{expires:1, path:'/'}) //쿠키정보를 popup none값으로 생성
+            $('.modal').hide()
+          }else{  //체크박스에 체크하지 않았다면
+            //쿠키정보를 생성하지않고 그냥 닫기
+            $('.modal').hide()
+          }
+        }
+
+        //닫기버튼 클릭시 close_popup함수를 호출해서 실행
+        $('#c_btn, #ch').click(function(){
+          close_popup()
+        })
+
+
+      });
+    </script>
+  </head>
+  <body>
+    <h2>제이쿼리 문서객체조작 실습2. 모달윈도 - 오늘 하루 열지 않음</h2>
+
+    <dl>
+      <dt>모달윈도 == 팝업레이더</dt>
+      <dd>모달윈도(Modal Window)는 사용자 인터페이스 (UI)디자인 개념에서 자식 윈도에서 부모윈도우로 돌아가기 전에 사용자의 상호동작을 요구하는 창을 말한다.</dd>
+      <dd>모달 윈도우는 부모창을 배경으로 어둡게 하고 자식요소가 화면의 가운데 중앙에 배치하도록 하며, 오른쪽 상당(이미지배너 아래)에 '닫기'버튼을 만들어서 닫을 수 있게 한다</dd>
+    </dl>
+
+    <h3>제이쿼리 쿠키 플러그인</h3>
+    <p>쿠키(cookie) : 서버에서 클라이언트에게 특정정보를 저장하는 데이커</p>
+    <p>사용자 이름, 아이디, 방문횟수 등을 기록하여 차후 접속 시 활용</p>
+    <p>제이쿼리 쿠키 사용법<br>
+      $.cookie('쿠키이름','쿠키값',{expires:만료일, path:'저장경로'});
+    </p>
+    <p>제이쿼리 쿠키는 쿠키플러그인 파일을 다운로드하여 연결후 작성한다<br>
+      <a href="https://plugins.jquery.com/cookie/">https://plugins.jquery.com/cookie/</a>
+    </p>
+
+    <ul>
+      <li>expires : 1 = 하루</li>
+      <li>분단위 생성<br>
+        var date = new Date()<br>
+        date.setTime(date.getTime() + 1*60*1000)l //1분<br>
+        $.cookie('key','value',{expires: date, path : '/'})
+      </li>
+    </ul>
+
+
+
+  </body>
+</html>

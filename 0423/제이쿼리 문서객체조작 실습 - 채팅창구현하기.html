@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>제이쿼리 문서객체조작 실습 - 채팅창구현하기</title>
+
+    <style>
+      .wrap {
+        width: 400px;
+        margin: 60px 0 0 10px;
+        box-shadow: 0 2px 4px #ccc;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background: #fff;
+        padding: 38px 8px 8px 8px;
+        position: relative;
+      }
+      header .btn {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: none;
+        position: absolute;
+        top: 8px;
+        cursor: pointer;
+      }
+      header #close {
+        background: #ff1515;
+        left: 7px;
+      }
+      header #minbtn {
+        background: #ffd000;
+        left: 26px;
+      }
+      header #maxbtn {
+        background: #20ce20;
+        left: 44px;
+      }
+
+      header img {
+        width: 80px;
+        border: 1px solid #5c2626;
+        left: 7px;
+        vertical-align: middle;
+      }
+      header span {
+        font-weight: bold;
+        font-size: 14px;
+        margin-left: 5px;
+        color: #5c2626;
+      }
+
+      /* 채팅창서식 */
+      .chatbox {
+        height: 400px;
+        background: #cfdee9;
+        padding: 10px;
+        position: relative;
+        overflow-y: scroll; /* 세로방향(y) 스크롤 생기게하기 */
+      }
+
+      /* 말풍선 서식 */
+      .chatbox div {
+        margin: 5px 0;
+        max-width: 300px;
+        font-size: 14px;
+        display: inline-block;
+        position: relative;
+      }
+      .bubble1 {
+        /*싱대방꺼*/
+        background: #fff;
+        border-radius: 14px 14px 14px 0; /* 왼쪽하단 뾰족하게 */
+        padding: 7px 15px 7px 15px;
+        float: left;
+        clear: both;
+      }
+      .bubble2 {
+        /*내꺼*/
+        background: #ffd92f;
+        border-radius: 14px 14px 0 14px; /* 오른쪽하단 뾰족하게 */
+        padding: 7px 15px 7px 15px;
+        float: right;
+        clear: both;
+      }
+
+      /* 푸터영역 서식 */
+      .txt_box {
+        background: #fafafa;
+        padding: 10px;
+        display: flex;
+      }
+
+      .txt_box textarea {
+        height: 60px;
+        width: calc(100% - 50px);
+        border-radius: 2%;
+        background: #fff;
+        border: 0.5px solid #ccc;
+        resize: none;
+        padding: 10px;
+        box-sizing: border-box;
+        font-size: 14px;
+      }
+      #send {
+        background: #ffd92f;
+        width: 60px;
+        height: 60px;
+        border: none;
+        color: #232323;
+        border-radius: 3px;
+        margin-left: 10px;
+      }
+    </style>
+
+    <!-- 제이쿼리 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        // 1. 변수선언
+        let talk;
+        let send = $(".txt_box #send");
+
+        //2. 버튼을 클릭시 텍스트박스 안에 내용을 변수에 담아서 출력한다.
+        send.click(function(){
+        talk_print();
+      });
+
+        //enter키를 누르면 내용이 삽입되게하기
+        $('.wrap').keydown(function(e){
+        if(e.keyCode == 13){  //키보드의 'enter'키를 누르면
+          talk_print();
+        }
+      });
+
+        //글내용 출력함수
+        function talk_print(){
+          talk = $('textarea').val();
+          if (talk == "") {
+            //talk의 값이 비었다면
+            //버튼을 비활성화하고
+            send.attr("disabled", false);
+          } else {
+            //그게 아니라면
+            //버튼 클릭하게
+            $("textarea").val(""); // 내용지우고
+            $(".chatbox").append("<div class=bubble2>" + talk + "</div>"); //출력한다
+            $("textarea").focus();
+          }
+        }
+
+      });
+    </script>
+  </head>
+  <body>
+    <h2>제이쿼리 문서객체조작 실습 - 채팅창구현하기</h2>
+    <p>
+      채팅창 입력양식을 삽입하여 사용자가 글 내용 입력 후 '전송' 버튼 클릭시 글
+      내용이 대화상자에 출력되게 하기
+    </p>
+
+    <ul>
+      <li>채팅창 화면을 header, main, footer 영역으로 구성</li>
+      <li>header영역은 브라우저 버튼, 사용자가 프로필영역, 소개글 작성</li>
+      <li>main영역은 상대방과 사용자가 입력한 글 내용이 말풍선으로 출력</li>
+      <li>
+        footer영역은 사용자가 입력양식에 글을 입력하고 버튼 클릭시 변수에 담아
+        내용을 출력하도록 함
+      </li>
+      <li>
+        이때, 사용자가 글 내용을 입력하지 않고, 버튼 클릭시 disabled속성으로
+        클릭 안 되게 하기
+      </li>
+      <li>속성 메서드 : val</li>
+      <li>클래스 조작 메서드 : addClass</li>
+      <li>내용추가 메서드 : append</li>
+    </ul>
+
+    <input type="button" value="enabled 버튼" />
+    <input type="button" value="disabled 버튼" disabled /><br />
+
+    <div class="wrap">
+      <header>
+        <input type="button" class="btn" id="close" />
+        <input type="button" class="btn" id="minbtn" />
+        <input type="button" class="btn" id="maxbtn" />
+        <img src="./brown profile.webp" alt="브라운" />
+        <span>안녕 난 브라운이야</span>
+      </header>
+
+      <!-- 상대방, 내가 작성한 글 내용이 출력되는 영역 -->
+      <section class="chatbox">
+        <div class="bubble1">모해?</div>
+        <div class="bubble1">밥 한번 먹장</div>
+        <div class="bubble2">구래구래!</div>
+      </section>
+
+      <!-- 대화 입력창 : 사용자가 글을 입력하는 영역 -->
+      <footer class="txt_box">
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+          placeholder="대화 내용이 들어갑니다"
+        ></textarea>
+        <input type="button" value="전송" id="send" />
+      </footer>
+    </div>
+  </body>
+</html>

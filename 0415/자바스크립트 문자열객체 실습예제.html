@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자바스크립트 문자열객체 실습예제</title>
+  <style>
+    #gallery{width: 500px; height: 380px; border: 4px solid #333;}
+    #gallery > h3{display: none;}
+    #gallery *{margin: 0; padding: 0;}
+    #gallery ul, #gallery li{list-style: none; height: 50px; overflow: hidden;}
+    #gallery ul{display: flex;}
+    #gallery ul li{width: 20%; height: 50px;}
+    #gallery ul li:hover{filter: brightness(1.2); cursor: pointer;}
+    #gallery img{width: 100%;}
+    #big_img{height: 330px;}
+
+
+    #cj_gallery{width: 500px; height: 620px;}
+    #cj_gallery > h3{display: none;}
+    #cj_gallery *{margin: 0; padding: 0;}
+    #cj_gallery li img{width: 80px;}
+    #cj_gallery ul{
+      list-style: none;
+      display: flex;
+      height: 100px; width: 450px;
+      box-sizing: border-box;
+    }
+    #cj_gallery ul li{
+      width: 100px; height:100px;
+     
+      box-sizing: border-box;
+    }
+    #cj_gallery ul li:hover{
+      filter: brightness(1.2);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+
+    /* .on{border: 4px solid #ff87a5;} */
+  </style>
+</head>
+<body>
+  <h2>문자열객체 - 탭메뉴 이미지 갤러리</h2>
+  <p>문자열객체를 활용해 탭메뉴 5개를 클릭시 해당 문자열값을 변수에 담아 큰 이미지가 변경될 수 있도록 src주소값을 변경한다.</p>
+  <ol>
+    <li>독립적인 콘텐츠를 만들기 위한 article태그 박스를 만든다</li>
+    <li>썸네일 이미지메뉴를 만들기 위한 ul, li태그를 작성한다.</li>
+    <li>큰사진이 보이도록 div태그를 작성한다.</li>
+    <li>script 문자열객체를 통해 썸네일 이미지 클릭시 해당 src값(변수1)을 변수에 담아 큰사진(변수2)의 src속성값에 대입하여 이미지가 변경되도록 한다.</li>
+  </ol>
+
+  <article id="gallery">
+    <h3>이미지갤러리</h3>
+    <ul class="lnb">
+      <li><img src="./3.png" alt=""></li>
+      <li><img src="./1.jpg" alt=""></li>
+      <li><img src="./2.png" alt=""></li>
+      <li><img src="./4.jpg" alt=""></li>
+      <li><img src="./5.png" alt=""></li>
+    </ul>
+    <img src="./3.png" alt="" id="big_img">
+  </article>
+
+  <article id="cj_gallery">
+    <h3>예제갤러리</h3>
+    <img src="./c0.jpg" alt="" id="b_img">
+    <ul class="list">
+      <li class="on"><img src="./c0.jpg" alt=""></li>
+      <li><img src="./c1.jpg" alt=""></li>
+      <li><img src="./c2.jpg" alt=""></li>
+      <li><img src="./c3.jpg" alt=""></li>
+      <li><img src="./c4.jpg" alt=""></li>
+    </ul>
+  </article>
+
+
+  <script>
+    //1.변수선언 - 큰사진
+    const big_img = document.getElementById('big_img')
+    //1. 변수선언 - 작은사진
+    let s_img = document.querySelectorAll('.lnb > li > img')
+
+    //작은사진 클릭하면 해당이미지의 src주소값을 변수에 담는다.
+    for(let i=0;i<s_img.length;i++){ //이미지 개수만큼 반복한다.
+      s_img[i].addEventListener('mouseenter', function(){
+        let img_src = this.src;
+        console.log(img_src); //이미지 속성값 테스트
+
+        //src변수에 있는 값(오른쪽)을 big_img의 src속성값에 대입한다.
+        big_img.src=img_src;
+      })
+    }
+
+    //1.변수선언 - 큰사진
+    const b_img = document.getElementById('b_img')
+    //1. 변수선언 - 자근사진
+    let thum = document.querySelectorAll('.list > li > img')
+    const list = document.querySelectorAll('.list li')
+
+    // 자근사진 클릭하면 해당이미지 주소값을 변수에 담는다
+    for(let i=0;i<thum.length;i++){
+      thum[i].addEventListener('click', function(){
+        let img_src = this.src;
+        console.log(img_src);//속성값 잘나오나?
+
+        //src변수에 있는 값(오른쪽)을 b_img의 src속성값에 대입한다.
+        b_img.src=img_src;
+
+        
+        for(let j=0;j<thum.length;j++){
+          thum[j].style.border='none'; //모두서식제거
+          this.style.border='4px solid #ff87a5'; // 내가 선택한 썸네일 이미지에 서식적용
+        }
+        // for(let j = 0;j<list.length;j++){
+        //   list[j].classList.remove('on');
+        // }
+        // this.parentNode.classList.add('on');
+        })
+      
+    }
+
+
+
+
+
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+@charset "utf-8";
+
+/* 웹폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+
+/* main.css */
+*{margin: 0px; padding: 0px;}
+
+body{
+  font-family: "Noto Sans KR", '맑은 고딕', arial;
+  /* font-optical-sizing: auto; */
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.75rem;
+  color: #333;
+  line-height: 160%;
+}
+
+a{color: #1a521d; text-decoration: none;}
+
+header h1, main h2{
+  text-align: center;
+  padding: 5px 0px;
+}
+main h2 img{height: 80px;}
+
+
+.list01 > li, .list02 > li{
+  background-color: #ffdf27;
+  line-height: 40px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-indent: 10px;
+  display: block;
+  cursor: pointer;
+}
+.list01 > li:hover{background-color: #ffae00;}
+ul a{
+  line-height: 40px;
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-indent: 20px;
+  transition: 0.3s;
+}
+.list01 a:hover{
+  background-color: #ffef92;
+}
+.sub{display: none;}
+.sub li{
+  border-bottom: 1px solid #dfbb47;
+}
+.sub li:last-child{border-bottom: none;}
+.sub{background-color: #fff4cf;}
+i.fas{
+  float: right;
+  font-size: 1.4rem;
+  padding: 10px 10px 0 0;
+}
+
+.list02 > li{background-color: #0b70c4; color: #fff;}
+.sub02{display: none;}
+.sub02 li{
+  border-bottom: 1px solid #3d8bff;
+}
+.sub02 li:last-child{border-bottom: none;}
+.sub02{background-color: #dceaff;}
+.list02 a:hover{background-color: #a8cbff;}
+.list02 > li:hover{background-color: #004db1;}
+
+.act{
+  transform: rotate(180deg) translate(0,-8px) !important;
+}

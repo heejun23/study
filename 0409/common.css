@@ -1,0 +1,93 @@
+@charset "utf-8";
+
+
+/* 초기화 */
+*{margin: 0px; padding: 0px;}
+ul.li{list-style: none;}
+a{color:#333;text-decoration: none;}
+body{
+  font-family: "맑은고딕",Arial, Helvetica, sans-serif;
+  font-size:12px;
+  color: #333;
+}
+
+/* common.css */
+header{
+  width: 100%;
+  height: 70px;
+  background-color: #fff59b;
+  position: relative;
+}
+
+header > h1{
+  width: 60px; height: 60px;
+  padding: 10px 0px 0px 10px;
+  background: #f00;
+  font-size: 12px;
+}
+
+/* 토글버튼서식 */
+.total_btn{
+  position: absolute;
+  right: 10px; top: 15px;
+  cursor: pointer;
+}
+.fa-bars{font-size:40px;}
+#toggle{display: none;}
+
+
+
+/* gnb메뉴서식 */
+.gnb{
+  /* 모바일 거의 공통서식 */
+  width: 100%; height: 100%;
+  position: fixed;
+  background-color: rgba(0,0,0,.7);
+  padding-left: 30%;
+  box-sizing: border-box; /* padding값으로 박스가 커질까봐 */
+  left: 100%; top: 0px;
+  transition: 0.3s;
+}
+
+/* 토글버튼 클릭시 gnb의 위치가 left:0으로 위치가 이동 */
+#toggle:checked + header > .gnb{
+  left: 0px;
+}
+
+
+.gnb > ul{
+  width: 100%; height: 100%;
+  padding-top: 100px;
+  background-color: #fff59b;
+}
+.gnb > ul > li{
+  line-height:40px;
+  border-bottom: 1px solid #333;
+  text-indent:10px;
+}
+.gnb > ul > li > a{
+  font-size: 1.1rem; /* 1rem = 16px */
+  display: block;
+  line-height: 40px;
+}
+
+.gnb > ul > li > a:hover{} /* 모바일은 터치라서 오버는 쓰지않는다 */
+
+.gnb .fa-angle-down{
+  float: right;;
+  padding: 10px;
+}
+
+
+/* 닫기버튼 */
+.gnb .fa-times{
+  font-size: 40px;
+  color: #fff;
+  position: absolute;
+  left: 3%; top: 3%;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.gnb .fa-times:hover{
+  transform: rotate(180deg);
+}

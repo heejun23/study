@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>쿠팡 메인슬라이드 구현하기</title>
+  <style>
+    *{margin: 0; padding: 0;}
+    header{
+      height: 70px; background: #ccc;
+      text-align: center;
+    }
+    header h1 img{width: 250px; padding-top: 10px;}
+    .slide{position: relative;}
+    .slide_wrapper div{display: none;}
+    .slide_wrapper div:first-child{display: block;}
+
+    /* 내비게이션 서식 */
+    .lnb{
+      position:absolute;
+      right: 20px; top: 30px;
+      z-index: 10;
+    }
+    .lnb > ul{}
+    .lnb > ul > li{
+      list-style: none;
+      border: 2px solid #fff;
+      background: #fff;
+      width: 250px; height: 66px;
+      transform: translateY(-16px);
+    }
+    .lnb > ul > li:hover{border: 2px solid #0084ff;}
+    .lnb > ul > li a{
+      display: block;
+      color: #333; text-decoration: none;
+      width: 250px; height: 66px;
+      padding: 22px 0 0 10px;
+      font-size: 14px;
+    }
+    .lnb > ul > li:nth-child(5) a{padding: 15px 0 0 10px;}
+    .act{border: 2px solid #0084ff !important;}
+    /* .lnb > ul > li:hover{
+      outline: 1px solid #0084ff;
+    } */
+    .lnb img {display: block;}
+  </style>
+
+  <!-- 1. 제이쿼리 라이브러리 연결 -->
+  <script src="./script/jquery-3.7.1.js"></script>
+  <!-- 2. 제이쿼리 랩퍼 -->
+  <script>
+    $(document).ready(function(){
+      //1. 메뉴변수
+      let lnb = $('.lnb > ul > li') // 메뉴
+      let slide = $('.slide_wrapper > div') //슬라이드
+      let i = 0
+
+      lnb.eq(i).addClass('act')
+
+      let btn = $('.lnb a');
+      let img_url;
+
+      btn.mouseenter(function(){
+        lnb.removeClass('act')
+
+        img_url = $(this).attr('href')
+        console.log(img_url)
+
+        $('#banner01').attr('src',img_url);
+        
+      })
+    })
+  </script>
+</head>
+<body>
+<!-- 상단헤더 -->
+  <header>
+    <h1>
+      <a href="index.html" title="메인페이지 이동">
+        <img src="./images/logo_coupang_w350.png" alt="">
+      </a>
+    </h1>
+  </header>
+  
+
+
+<!-- 메인콘텐츠 -->
+  <main>
+    <article class="slide">
+      <nav class="lnb">
+        <ul>
+          <li><a href="./images/banner01.jpg" title="">삼다수</a></li>
+          <li><a href="./images/banner02.jpg" title="">전세계베스트</a></li>
+          <li><a href="./images/banner03.jpg" title="">쿠폰혜택</a></li>
+          <li><a href="./images/banner04.png" title="">가정의 달</a></li>
+          <li><a href="./images/banner05.jpg" title="">BEST브랜드<br>다시없을 가격</a></li>
+          <li><a href="./images/banner06.jpg" title="">매일유업</a></li>
+        </ul>
+      </nav>
+      <div class="slide_wrapper">
+        <div class="slide"><img src="./images/banner01.jpg" alt="배너1" id="banner01"></div>
+      </div>
+    </article>
+  </main>
+
+
+
+
+<!-- 푸터 -->
+  <footer></footer>
+</body>
+</html>

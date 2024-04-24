@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>사과 탭</title>
+  <style>
+    .tab_con{
+      width: 500px; height: 600px;
+      border: 3px solid #333;
+      position: relative;
+      margin: 0 auto;
+    }
+    .tab_con > ul{
+      padding: 0; margin: 0 auto;
+      display: flex;
+      width: 200px;
+    }
+    .tab_con > ul > li{
+      list-style: none;
+      margin: 0 auto;
+      margin-top: 500px;
+    }
+
+    .tab_con > ul > li > a > img{
+      width: 50px;
+    }
+    .tab_con > ul > li > a{display: block; line-height: 0px;}
+    .tab_con > ul > li > a:hover{
+      transition: 0.3s;
+      filter: brightness(1.1);
+    }
+
+
+    .tab_con div{
+      position: absolute;
+      top: 50px; left: 50px;
+      display: none;
+    }
+    .tab_con div img{
+      /* top: 50px; left: 50px; */
+      width: 400px;
+    }
+    .tab_con .con1{z-index: 3;}
+    .tab_con .con2{z-index: 2;}
+    .tab_con .con3{z-index: 1;}
+
+    .on{
+      border: 3px solid #f00;
+    }
+
+    li.on div{display: block;}
+    
+  </style>
+</head>
+<body>
+  <article class="tab_con">
+    <ul>
+      <li class="on">
+        <a href="#" title=""><img src="./img/68031611L.jpg" alt=""></a>
+        <div class="con1">
+          <img src="./img/68031611L.jpg" alt="">
+        </div>
+      </li>
+
+      <li>
+        <a href="#" title=""><img src="./img/68031611L1.jpg" alt=""></a>
+        <div class="con2">
+          <img src="./img/68031611L1.jpg" alt="">
+        </div>
+      </li>
+
+      <li>
+        <a href="#" title=""><img src="./img/68031611L2.jpg" alt=""></a>
+        <div class="con3">
+          <img src="./img/68031611L2.jpg" alt="">
+        </div>
+      </li>
+    </ul>
+  </article>
+
+  <script>
+    // 탭메뉴 목록
+    const tabList = document.querySelectorAll('.tab_con li');
+
+
+    // 탭 메뉴 클릭시 해당 값 출력
+    for(let i=0;i<tabList.length;i++){
+      tabList[i].querySelector('a').addEventListener('click',function(e){
+
+        e.preventDefault(); //새로고침방지
+
+        for(let j = 0;j<tabList.length;j++){
+          tabList[j].classList.remove('on');
+        }
+        this.parentNode.classList.add('on');
+      });
+    }
+
+  </script>
+</body>
+</html>

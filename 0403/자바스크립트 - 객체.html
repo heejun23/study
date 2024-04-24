@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자바스크립트 - 객체</title>
+  <style>
+    span{font-weight: bold;}
+    .txt01{color: brown;}
+    .txt02{color: darkcyan;}
+    .txt03{color: darkorange;}
+  </style>
+</head>
+<body>
+  <h2>자바스크립트 - 객체</h2>
+  <dl>
+    <dt>객체(object)란?</dt>
+    <dd>1. 이름(key)과 값(value)로 구성된 속성을 담아놓은 컨테이너다.</dd>
+    <dd>2. 객체에 변수를 선언하면 속성(property)를 사용할 수 있다. 예) document.getElementById('아이디명');</dd>
+    <dd>3. 객체에 함수를 선언하면 메서드(method)를 사용할 수 있다. 예) document.write('내용출력');</dd>
+  </dl>
+
+  <h3>1. 객체의 종류</h3>
+  <p>객체는 내장객체와 사용자 정의 객체로 분류된다. 내장 객체는 자바스크립트에 미리 정해놓은 객체이다.</p>
+  <ul>
+    <li>문서객체(document)</li>
+    <li>윈도우, 브라우저 객체(window)</li>
+    <li>수학(math)객체</li>
+    <li>날짜(date)객체</li>
+    <li>배열(array)객체</li>
+    <li>문자열(string)객체</li>
+  </ul>
+
+  <h3>2.사용자 정의 객체 - 내장객체를 제외한 사용자가 원하는 내용을 토대로 직접 객체를 선언하여 작성하는 방법</h3>
+
+  <div>
+    <fieldset>
+      <legend>휴대폰정보 입력하기</legend>
+      <p><label for="company">제조회사 : </label><input type="text" id="company"></p>
+      <p><label for="model">모델명 : </label><input type="text" id="model"></p>
+      <p><label for="color">색상명 : </label><input type="text" id="color"></p>
+      <input type="button" id="order_btn" value="입력한 정보 출력하기(신청하기or주문하기)">
+      <p>출력 예) 나의 핸드폰 제조회사는 '000'이고 모델명은 '000'이며, 색상은 '000'입니다.</p>
+      <p id="result"></p>
+    </fieldset>
+  </div>
+
+
+
+
+  <div>
+    <fieldset>
+      <legend>개인정보 입력</legend>
+      <p><label for="f_name">성 : </label><input type="text" maxlength="2" id="f_name"></p>
+      <p><label for="name">이름 : </label><input type="text" maxlength="4" id="name"></p>
+      <p><label for="age">나이 : </label><input type="number" id="age"></p>
+      <p><label for="height">키 : </label><input type="number" id="height"></p>
+      <p><label for="weight">몸무게 : </label><input type="number" id="weight"></p>
+      <input type="button" id="done" value="정보입력완료">
+      <input type="reset" id="cancel" value="입력취소">
+      <p>출력 예) 제 이름은'000'이며, 나이는 '00'살 입니다. 키는 '000'cm이고 몸무게는 '00'kg입니다.</p>
+      
+      <p id="total"></p>
+    </fieldset>
+  </div>
+
+
+
+
+
+
+  <script>
+    // 1. 사용자 정의 객체 . 변수선언
+    // 객체명 =new Object();
+    let phone = new Object();
+    const btn = document.getElementById('order_btn');   // 버튼변수
+    
+    btn.addEventListener('click',function(){
+      const c = document.getElementById('company').value; // .value; 입력한 값을 저장
+      const m = document.getElementById('model').value;
+      const color = document.getElementById('color').value;
+
+      phone.company = c;
+      phone.model = m;
+      phone.color = color;
+
+      //객체 호출하여 내용 출력하기
+      document.getElementById('result').innerHTML=`나의 핸드폰 제조회사는 <span class='txt01'>${phone.company}</span>이고 모델명은 <span class='txt02'>${phone.model}</span>이며, 색상은 <span class='txt03'>${phone.color}</span>입니다.`;
+
+    });
+
+    //2. 개인정보탭
+  let personal = new Object();
+  const btn01 = document.getElementById('done')
+  const btn02 = document.getElementById('cancel')
+
+  btn01.addEventListener('click', function(){
+    const fn = document.getElementById('f_name').value;
+    const n = document.getElementById('name').value;
+    const a = document.getElementById('age').value;
+    const h = document.getElementById('height').value;
+    const w = document.getElementById('weight').value;
+
+    personal.f_name = fn;
+    personal.name = n;
+    personal.age = a;
+    personal.height = h;
+    personal.weight = w;
+
+    // 객체생성 두번째 방법
+    let person={
+      firstName:fn,   //입력한 데이터 값을 속성에 대입
+      lastName:name,  //입력한 데이터 값을 속성에 대입
+      age:age,        //입력한 데이터 값을 속성에 대입
+      height:h,       //입력한 데이터 값을 속성에 대입
+      weight:w        //입력한 데이터 값을 속성에 대입
+    }
+
+
+
+    document.getElementById('total').innerHTML=`제 이름은 ${personal.f_name}${personal.name}이며, 나이는 ${personal.age}살 입니다. 키는 ${personal.height}cm이고 몸무게는 ${personal.weight}kg입니다.`;
+
+  });
+
+  // 입력취소버튼 (클릭시 입력창 내용 초기화)
+  btn02.addEventListener('click',function(){
+    document.getElementById('f_name').value="";  //.value=""; 값을 비운다 (초기화)
+    document.getElementById('name').value="";    //.value=""; 값을 비운다
+    document.getElementById('age').value="";     //.value=""; 값을 비운다
+    document.getElementById('height').value="";  //.value=""; 값을 비운다
+    document.getElementById('weight').value="";  //.value=""; 값을 비운다
+    total.innerHTML=""; //출력된 입력값 초기화
+  });
+
+
+  </script>
+
+
+</body>
+</html>

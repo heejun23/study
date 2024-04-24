@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>종합실습_좌우_이미지 슬라이드</title>
+  <style>
+    *{margin:0px;padding:0px;}
+    .swiper-container{
+      width:100%;position:relative;
+    }
+    .swiper-wrapper{
+      width:600%;
+      display:flex;
+      position:relative;
+      left:0px;
+      transition:0.5s;
+    }
+    .swiper-slide{height: 100% }
+    .swiper-wrapper div:last-child{margin:none;}
+    .swiper-wrapper div img{
+      width:100%;
+      display:block;
+      object-fit: cover;
+    }
+
+    /* 좌, 우버튼 서식 */
+    .btn{
+      border-right:3px solid #fff;border-bottom:3px solid #fff;
+      display:inline-block;width:40px;height:40px;
+      cursor:pointer;position:absolute;
+    }
+    #left{left:10px;transform:rotate(135deg);top:45%;}
+    #right{right:10px;transform:rotate(-46deg);top:44%;}
+
+    @media screen and (max-width: 768px){
+      .slide_wrapper div img{
+        height: 100vh;
+        object-fit: cover;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>종합실습_좌우_이미지 슬라이드(반응형)</h2>
+  <article class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="./images02/slide1.jpg" alt=""></div>
+      <div class="swiper-slide"><img src="./images02/slide2.jpg" alt=""></div>
+      <div class="swiper-slide"><img src="./images02/slide3.jpg" alt=""></div>
+      <div class="swiper-slide"><img src="./images02/slide4.jpg" alt=""></div>
+      <div class="swiper-slide"><img src="./images02/slide5.jpg" alt=""></div>
+      <div class="swiper-slide"><img src="./images02/slide6.jpg" alt=""></div>
+    </div>
+    <span class="btn" id="left">&nbsp;</span>
+    <span class="btn" id="right">&nbsp;</span>
+  </article>
+
+  <script>
+    //변수선언하기
+    //좌, 우측 버튼, 이미지 5장 목록(부모), 움직이는 이동거리, 개수
+    const slide = document.querySelector('.swiper-wrapper');
+    const slide_img = document.querySelectorAll('.swiper-wrapper .swiper-slide');
+    const l_btn = document.getElementById('left');
+    const r_btn = document.getElementById('right');
+
+    const img_n = slide_img.length; //목록의 개수를 구하여 변수에 담는다.
+    console.log(img_n); //6
+
+    const img_w = 100; //이미지 너비값 100%
+    // const m = 30; //마진값
+    const s_con = 1; //한페이지에 보여질 페이지수
+    let count = 0; //초기값s
+
+    //왼쪽으로 움직이는 함수
+    function mslide(n){
+      slide.style.left = -(img_w*n)+'%'; //0, -100%, -200%, -300%, -400%, -500%
+      count = n;
+      console.log(slide.style.left);
+    }
+    //매 3초마다 자동으로 함수를 호출하여 움직이게 한다.
+    //시간객체 setInterval(함수명, 시간)  반복실행
+    //시간제거 clearInterval(객체명) 시간을 정지함
+
+    let Timer = setInterval(function(){
+      if(count < img_n-s_con){
+        mslide(count+1); 
+      }else{
+        mslide(0);
+      }
+    },3000);
+
+    //버튼 클릭시 n값을 mslide에 넘겨서 슬라이드 움직이게 함.
+    l_btn.addEventListener('click', function(){
+      clearInterval(Timer); //시간객체를 제거하여 슬라이드 멈추게한다.
+
+      if(count>0){ //만약에 count의 값이 0보다 크면
+        mslide(count-1); //count값에 1을 빼고
+      }else{ //그렇지 않으면
+        mslide(img_n-s_con); //그렇지 않으면 img목록 개수에 페이지 보여질 개수를 뺀값을 넣어라.
+      }
+    });
+
+    r_btn.addEventListener('click', function(){
+      clearInterval(Timer); //시간객체를 제거하여 슬라이드 멈추게한다.
+      
+      if(count<img_n-s_con){ //만약에 count값이 이미지목록 개수와 보여질 개수 뺀값보다 작다면
+        mslide(count+1); //count+1을 하여 그전 이미지가 나오게
+      }else{ //그렇지 않으면
+        mslide(0); //0을 대입하여 첫번째 목록이 나오게 한다.
+      }
+    });
+
+    
+
+    // 마우스 아웃시 다시 시간객체를 생성하여 자동으로 움직이게 한다.
+    // l_btn.addEventListener('mouseleave',function(){
+    //   Timer = setInterval(function(){
+    //     if(count < img_n-s_con){
+    //       mslide(count+1); 
+    //     }else{
+    //       mslide(0);
+    //     }
+    //   },3000);
+    // });    
+// 마우스 아웃시 다시 시간객체를 생성하여 자동으로 움직이게 한다.
+    // r_btn.addEventListener('mouseleave',function(){
+    //   Timer = setInterval(function(){
+    //     if(count < img_n-s_con){
+    //       mslide(count+1); 
+    //     }else{
+    //       mslide(0);
+    //     }
+    //   },3000);
+    // });   
+
+  </script>
+</body>
+</html>

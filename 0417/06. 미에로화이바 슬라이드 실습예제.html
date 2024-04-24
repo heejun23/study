@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>미에로화이바 메인슬라이드 적용하기</title>
+      <!-- 아이콘폰트 -->
+      <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  <style>
+    *{margin: 0; padding: 0;}
+    ul,li{list-style: none;}
+    header{
+      width:100%;height:100px;background:rgba(0,0,0,.3);
+      position:absolute;z-index:1000;
+    }
+    .slide{
+      position:relative;
+      height:94vh;
+      overflow:hidden;
+    }
+    .slide_wrapper div{position:absolute; width: 100%;}
+    .slide_wrapper div img{width: 100%;}
+    .slide_wrapper div:first-child{z-index: 30;}
+    .slide_wrapper div:nth-child(2){z-index: 20;}
+    .slide_wrapper div:last-child{z-index: 10;}
+
+    /* 태블릿 해상도일경우 */
+    @media screen and (min-width: 768px) and (max-width: 1024px){
+      .slide_wrapper div img{
+        height: 100vh;
+        object-fit: cover;
+      }
+    }
+    /* 모바일 해상도일 경우 */
+    @media screen and (max-width: 768px){
+      .slide_wrapper div img{
+        height: 100vh;
+        object-fit: cover;
+      }
+    }
+
+
+    .lnb ul{
+      display: flex;
+      justify-content: center;
+      width:100px;
+      position: absolute; bottom: 50px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+    .lnb li{
+      width: 15px; height: 15px;
+      border-radius: 50%;
+      background-color: #fff;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+
+    .act{
+      background: rgb(255, 74, 3) !important;
+      width: 35px !important;
+      border-radius: 30px !important;
+      /* transition: 0.5s; */
+      /* 여기에 시간속성을 주면 나중에 생기는거라 부자연스러워짐 먼저 있는 태그에 주기 */
+    }
+
+    /* 정지버튼 */
+    .icon{
+      text-align: center;
+      position: absolute;
+      right: 120px; bottom: 38px;
+      background-color: #fff;
+      border-radius: 50%;
+      width: 34px; height: 34px;
+      z-index: 500;
+      cursor: pointer;
+    }
+    .fas{
+      font-size: 28px;
+      color: #222;
+      padding-top: 3px;
+    }
+    .fa-play{padding-left: 4px;}
+
+  </style>
+
+  <!-- 1. 제이쿼리 라이브러리 연결 -->
+  <script src="./script/jquery-3.7.1.js"></script>
+
+  <!-- 2.제이쿼리 랩퍼 -->
+  <script>
+    $(document).ready(function(){
+
+      //1.변수
+      let i = 0 //인덱스 값!
+      let slide = $('.slide_wrapper div')
+      let c_btn = $('.lnb li')
+
+      //2. 이미지가 변하는 함수 (숨기는게 우선이다)
+      function fadeInOut(){
+        c_btn.removeClass('act')  //컨트롤 버튼에 서식 모두 제거하고
+        slide.fadeOut() // 보이는 이미지 전부 숨기고
+        if(i==2){ //만약에 인덱스 값이 2라면 = 마지막 이미지라면
+          i=0     //인덱스값을 1로 대입하고
+        }else{    //그렇지 않으면
+          i++     //1씩 더해 다음 이미지가 나오게 한다.
+        }
+        slide.eq(i).fadeIn()  //인덱스 번호에 해당하는 n번재 이미지가 나옴
+        c_btn.eq(i).addClass('act') //인덱스 번호에 해당하는 컨트롤 버튼에 서식 적용
+      }
+
+      c_btn.click(function(){ // 컨트롤버튼 클릭했을 때
+        i = $(this).index() // i에 컨트롤버튼의 인덱스번호를 대입
+        console.log(i)  //0 ,1 ,2
+
+        c_btn.removeClass('act')  //컨트롤 버튼에 서식 모두 제거하고
+        slide.fadeOut() // 보이는 이미지 전부 숨기고
+        
+        slide.eq(i).fadeIn()  //인덱스 번호에 해당하는 n번재 이미지가 나옴
+        c_btn.eq(i).addClass('act') //인덱스 번호에 해당하는 컨트롤 버튼에 서식
+      })
+
+      //3. 3초마다 반복실행 => Timer
+      let Timer = setInterval(fadeInOut,3000)
+
+      $("i.fa-pause").click(function(){
+        clearInterval(Timer)
+        if($(this).hasClass('fas fa-pause')==true){
+          clearInterval(Timer)
+          $(this).attr("class","fas fa-play")
+        }else{
+          $(this).attr("class",'fas fa-pause')
+
+          Timer = setInterval(fadeInOut,3000)
+        }
+      })
+
+    })
+  </script>
+
+</head>
+<body>
+  <!-- 상단헤더영역 -->
+  <header></header>
+
+
+<!-- 메인영역 -->
+  <main>
+    <article class="slide">
+      <nav class="lnb">
+        <ul>
+          <li class="act">&nbsp;</li>
+          <li>&nbsp;</li>
+          <li>&nbsp;</li>
+        </ul>
+      </nav>
+      <div class="slide_wrapper">
+        <div><img src="./images/visual01.jpg" alt="배너1"></div>
+        <div><img src="./images/visual02.jpg" alt="배너2"></div>
+        <div><img src="./images/visual03.jpg" alt="배너3"></div>
+      </div>
+      <div class="icon"><i class="fas fa-pause"></i></div>
+    </article>
+  </main>
+
+
+<!-- 푸터 -->
+  <footer></footer>
+</body>
+</html>
