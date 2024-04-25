@@ -12,11 +12,16 @@
     main{position:relative;padding-top:46px;}
     .mslide{ 
       position:relative;
-      width:1600px;height:697px;
+      /* width:1600px;height:697px; */
+      width:100%;height:80vh;overflow: hidden;
       margin:0 auto;
     }
-    .mslide > ul{width:8000px;display:flex;}
-    .mslide > ul > li{width:1600px;}
+    /* .mslide > ul{width:8000px;display:flex;} */
+    .mslide > ul{width:500%;display:flex;}
+    /* .mslide > ul > li{width:1600px;} */
+    .mslide > ul > li{width:100%;}
+    .mslide > ul > li img{width:100%;} /* 반응형 이미지 */
+
 
     .mslide i.fas{
       color:#fff;padding:22px 30px;
@@ -30,6 +35,24 @@
     }
     .mslide i.fa-angle-left{left:0px;}
     .mslide i.fa-angle-right{right:0px;}
+
+    #c_btn{
+      width:140px;opacity:1; 
+      text-align:center;
+      position: absolute;
+      left:50%;top: 95%;
+      transform:translateX(-50%);
+    }
+    #c_btn span{
+      height: 12px; width: 12px;
+      display:inline-block; 
+      margin:0 10px; 
+      cursor:pointer;border-radius:50%;
+      background:rgba(255,255,255,.8);
+      transition:0.3s;
+    }
+    #c_btn span:hover{background: #331c14;}
+    #c_btn span.on{background: #331c14 !important;}
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
@@ -116,6 +139,13 @@
       </ul>
       <i class="fas fa-angle-left"></i>
       <i class="fas fa-angle-right"></i>
+
+      <div id="c_btn">
+        <span class="on">&nbsp;</span>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+      </div>
     </article>
   </main>
 
@@ -159,17 +189,19 @@
       $('.mslide ul li:last-child').insertBefore('.mslide ul li:first-child');
 
       //2. 왼쪽으로 -1600px만큼 이동하여 1번이 가운데 오도록 한다.
-      $('.mslide ul').css('margin-left','-1600px');
+      // $('.mslide ul').css('margin-left','-1600px');
+      $('.mslide ul').css('margin-left','-100%');
 
       //3. 좌측으로 움직이는 함수
       function move_left(){
         //슬라이드 전체목록을 왼쪽으로 1칸 이동하고
-        $('.mslide ul').animate({'margin-left':'-3200px'}, 500, function(){
+        // $('.mslide ul').stop().animate({'margin-left':'-3200px'}, 500, function(){
+        $('.mslide ul').animate({'margin-left':'-200%'}, 500, function(){
 
           //왼쪽 첫번째 슬라이드를 오른쪽 마지막 이미지의 뒤로 자리배치한다.
           $('.mslide ul li:first-child').insertAfter('.mslide ul li:last-child');
-          $('.mslide ul').css('margin-left','-1600px');//2칸 밀린 위치를 오른쪽으로 다시이동
-
+          // $('.mslide ul').css('margin-left','-1600px');//2칸 밀린 위치를 오른쪽으로 다시이동
+          $('.mslide ul').css('margin-left','-100%');//2칸 밀린 위치를 오른쪽으로 다시이동
         });
       }
 
@@ -178,11 +210,56 @@
         //슬라이드 전체목록을 오른쪽 1칸 이동하고
         $('.mslide ul').animate({'margin-left':'0px'},500, function(){
           $('.mslide ul li:last-child').insertBefore('.mslide ul li:first-child');
-          $('.mslide ul').css('margin-left','-1600px');//2칸 밀린 위치를 오른쪽으로 다시이동
+          // $('.mslide ul').css('margin-left','-1600px');//2칸 밀린 위치를 오른쪽으로 다시이동
+          $('.mslide ul').css('margin-left','-100%');//2칸 밀린 위치를 오른쪽으로 다시이동
         });
       }
       //5. setInterval객체를 사용하여 매 4초마다 함수를 반복실행하여 슬라이드 자동으로 움직이게한다.
       let Timer = setInterval(move_left, 4000);
+
+      //버튼변수
+      const l_btn = $('.mslide i.fa-angle-left');
+      const r_btn = $('.mslide i.fa-angle-right');
+
+      //클릭시 해당 방향으로 함수를 호출하여 움직이기
+      l_btn.click(function(){
+        move_left();
+        clearInterval(Timer);//기존 자동슬라이드 종료
+      });
+
+      r_btn.click(function(){
+        move_right();
+        clearInterval(Timer);//기존 자동슬라이드 종료
+      });
+
+      //마우스 빼면 다시 시간을 넣어서 자동으로 움직이게 한다.
+      $('.mslide i.fas').mouseleave(function(){
+        clearInterval(Timer);//기존 자동슬라이드 종료
+        Timer = setInterval(move_left, 4000);
+      });
+
+      let i = 0;
+      // 콘트롤버튼 클릭시 해당 슬라이드 목록이 교체되기
+      let c_btn = $('.mslide #c_btn span');
+      c_btn.click(function(){
+        $('.mslide #c_btn span').removeClass('on');
+        $(this).addClass('on');
+
+        clearInterval(Timer);//기존 자동슬라이드 종료
+        i = $(this).index();
+        console.log(i);//0,1,2,3
+
+        if(i==0){
+          $('.mslide ul').html('<li><a href="#" title=""><img src="./images/slide01.png" alt="슬라이드1"></a></li><li><a href="#" title=""><img src="./images/slide02.png" alt="슬라이드2"></a></li><li><a href="#" title=""><img src="./images/slide3.jpg" alt="슬라이드3"></a></li><li><a href="#" title=""><img src="./images/slide4.jpg" alt="슬라이드4"></a></li><li><a href="#" title=""><img src="./images/slide5.jpg" alt="슬라이드5"></a></li>');
+        }else if(i==1){
+          $('.mslide ul').html('<li><a href="#" title=""><img src="./images/slide02.png" alt="슬라이드1"></a></li><li><a href="#" title=""><img src="./images/slide3.jpg" alt="슬라이드2"></a></li><li><a href="#" title=""><img src="./images/slide4.jpg" alt="슬라이드3"></a></li><li><a href="#" title=""><img src="./images/slide5.jpg" alt="슬라이드4"></a></li><li><a href="#" title=""><img src="./images/slide01.png" alt="슬라이드5"></a></li>');
+        }else if(i==2){
+          $('.mslide ul').html('<li><a href="#" title=""><img src="./images/slide3.jpg" alt="슬라이드1"></a></li><li><a href="#" title=""><img src="./images/slide4.jpg" alt="슬라이드2"></a></li><li><a href="#" title=""><img src="./images/slide5.jpg" alt="슬라이드3"></a></li><li><a href="#" title=""><img src="./images/slide01.png" alt="슬라이드4"></a></li><li><a href="#" title=""><img src="./images/slide02.png" alt="슬라이드5"></a></li>');
+        }else{
+          $('.mslide ul').html('<li><a href="#" title=""><img src="./images/slide4.jpg" alt="슬라이드1"></a></li><li><a href="#" title=""><img src="./images/slide5.jpg" alt="슬라이드2"></a></li><li><a href="#" title=""><img src="./images/slide01.png" alt="슬라이드3"></a></li><li><a href="#" title=""><img src="./images/slide02.png" alt="슬라이드4"></a></li><li><a href="#" title=""><img src="./images/slide3.jpg" alt="슬라이드5"></a></li>');
+        }
+
+      });
 
     });
   </script>

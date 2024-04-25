@@ -295,21 +295,24 @@
           clearInterval(Timer); //기존 자동슬라이드 종료
         });
 
+        //마우스 빼면 다시 시간을 넣어서 자동으로 움직이게 한다
         $(".mslide i.fas").mouseleave(function () {
           clearInterval(Timer); //기존 자동슬라이드 종료
           Timer = setInterval(move_left, 4000);
         });
 
         // 페이지네이션 변수
-        let pager = $(".page span"); //버튼
-        let i = $(".page span").index(); //버튼인덱스값
+        let i = 0;
+        let pager = $(".mslide .page span"); //버튼
 
-        // 페이지네이션
         pager.click(function () {
-          i = $(this).index();
-          console.log(i);
+          $(".mslide .page span").removeClass("act");
+          $(this).addClass("act");
 
-          
+          clearInterval(Timer); //기존 자동슬라이드 종료
+          i = $(this).index();
+          console.log(i); //0,1,2,3
+
           if (i == 0) {
             $(".mslide ul").html(
               '<li><a href="" title=""><img src="./images/slide5.jpg" alt="" />슬라이드5</a></li><li><a href="" title=""><img src="./images/slide01.png" alt="" />슬라이드1</a></li><li><a href="" title=""><img src="./images/slide02.png" alt="" />슬라이드2</a></li><li><a href="" title=""><img src="./images/slide3.jpg" alt="" />슬라이드3</a></li><li><a href="" title=""><img src="./images/slide4.jpg" alt="" />슬라이드4</a></li>'
@@ -326,17 +329,24 @@
             $(".mslide ul").html(
               '<li><a href="" title=""><img src="./images/slide3.jpg" alt="" />슬라이드3</a></li><li><a href="" title=""><img src="./images/slide4.jpg" alt="" />슬라이드4</a></li><li><a href="" title=""><img src="./images/slide5.jpg" alt="" />슬라이드5</a></li><li><a href="" title=""><img src="./images/slide01.png" alt="" />슬라이드1</a></li><li><a href="" title=""><img src="./images/slide02.png" alt="" />슬라이드2</a></li>'
             );
-          } else{
+          } else {
             $(".mslide ul").html(
               '<li><a href="" title=""><img src="./images/slide4.jpg" alt="" />슬라이드4</a></li><li><a href="" title=""><img src="./images/slide5.jpg" alt="" />슬라이드5</a></li><li><a href="" title=""><img src="./images/slide01.png" alt="" />슬라이드1</a></li><li><a href="" title=""><img src="./images/slide02.png" alt="" />슬라이드2</a></li><li><a href="" title=""><img src="./images/slide3.jpg" alt="" />슬라이드3</a></li>'
             );
           }
-
-          pager.removeClass("act");
-          pager.eq(i).addClass("act");
-          clearInterval(Timer);
-          let Timer = setInterval(move_left, 4000);
         });
+
+        function slide(i){
+          
+        }
+
+
+        //마우스 빼면 다시 시간을 넣어서 자동으로 움직이게 한다
+        pager.mouseleave(function () {
+          clearInterval(Timer); //기존 자동슬라이드 종료
+          Timer = setInterval(move_left, 4000);
+        });
+
       });
     </script>
   </body>

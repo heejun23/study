@@ -1,0 +1,24 @@
+a요소 클릭시 새로고침 방지법
+
+1. e.preventDefault();   : 이벤트 무력화 객체 사용
+event.preventDefault();
+해당 이벤트 발생시 이벤트의 전파를 막고 이벤트가 발생한 부분에서만 처리가 되게 만들어주는 메소드
+DOM 구조에서는 어떤 요소에서 이벤트 발생시, 해당 이벤트는 상위 요소를 타고 올라가게 되는데, 이처럼 원하지 않는 상황이 발생할 수 있음. 이를 방지하는 역할.
+
+2. a href = "#none"  : #뒤에 아무이름이나 작성해서 id값 찾지 못하게 하기
+3. a href = "javascript:void(0)"
+4. a href = "javascript:"
+5. return false;
+
+
+--갤러리 실습--
+txt값 가져오기
+
+1. a요소의 title값
+  title = $(this).attr(title)
+
+2. img요소의 alt값
+  title = $(this).find('img').attr(alt)
+
+3. span의 text값
+  title = $(this),find('span').text()
